@@ -16,3 +16,8 @@
      margin-left: 50px;
     margin-right: 50px;
 }
+img {
+    /* display: block;
+    max-width: 100%; */
+    object-fit: cover;
+}
