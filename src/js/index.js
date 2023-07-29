@@ -42,10 +42,8 @@ function createCatList() {
         })
         .catch(error => {
             Notify.failure('Oops! Something went wrong! Try reloading the page!')
-    
-           
         });
-};
+}
 
 createCatList();
 
