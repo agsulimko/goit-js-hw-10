@@ -1,7 +1,9 @@
 
 import axios from "axios";
 import { fetchBreeds, fetchCatByBreed } from "../js/cat-api"
-
+import SlimSelect from 'slim-select'
+import 'slim-select/dist/slimselect.css'
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 axios.defaults.headers.common["x-api-key"] = "live_PNR13y21QiKW1koHf2WRQD6nqfrvsSKqfg3KNt4285JhnbWOCJ2I75hAjyoX0v2S";
 
 const select = document.querySelector(".breed-select")
@@ -11,13 +13,13 @@ const error = document.querySelector('.error')
 
 select.addEventListener("change", onSelectChange)
   loader.classList.remove('is-hidden');
-    // select.classList.add('is-hidden');
+     select.classList.add('is-hidden');
       error.classList.remove('is-hidden')
 
 function createCatList() {
     
     loader.classList.remove('is-hidden');
-    // select.classList.add('is-hidden');
+     select.classList.add('is-hidden');
     error.classList.add('is-hidden')
 
     //обробляємо результат запиту на бекенд (всі породи котів)
@@ -28,15 +30,19 @@ function createCatList() {
             ).join(' ');
             
             select.innerHTML = optionsList;
+            // стилизируем select
             console.log(select);
-
-           
+               new SlimSelect({
+                select: select
+ })
+            
             // Отримали дані успішно, ховаємо лоадер показуємо селект
             loader.classList.add('is-hidden');
-            // select.classList.remove('is-hidden')
+         select.classList.remove('is-hidden')
         })
         .catch(error => {
-            console.log(error)
+            Notify.failure('Oops! Something went wrong! Try reloading the page!')
+    
            
         });
 };
@@ -47,7 +53,7 @@ createCatList();
 
 function onSelectChange(event) {
     loader.classList.remove('is-hidden');
-    // catInfo.classList.add('is-hidden');
+     catInfo.classList.add('is-hidden');
 
     const selectedBreedId = event.currentTarget.value;
     console.log(selectedBreedId);
@@ -59,8 +65,8 @@ function onSelectChange(event) {
              catInfo.classList.remove('is-hidden');
         })
         .catch(error => {
-        // loader.classList.add('is-hidden');
-           console.log('Oops! Something went wrong! Try reloading the page!')
+         loader.classList.add('is-hidden');
+            Notify.failure('Oops! Something went wrong! Try reloading the page!')
         });
 }
 
